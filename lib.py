@@ -15,6 +15,7 @@ def load_data(spark, file_path):
     Load the data into a Spark DataFrame
     """
     df = spark.read.csv(file_path, header=True, inferSchema=True)
+    df = df.drop("_c0")
     df = df.drop("course_skills")
     return df
 
@@ -23,13 +24,6 @@ def clean_data(df):
     """
     Clean the data by transforming and dropping unnecessary columns
     """
-    # Handle missing values for 'course_rating' and 'course_review_num'
-    df = df.withColumn("course_rating", col("course_rating").cast("double"))
-    df = df.withColumn("course_reviews_num", col("course_reviews_num").cast("integer"))
-
-    # Drop any rows where 'course_title' or 'course_organization' is null as they are essential
-    df = df.dropna(subset=["course_title", "course_organization", "course_students_enrolled"])
-
     # Transform 'course_students_enrolled' to numeric type
     df = df.withColumn("course_students_enrolled", when(col("course_students_enrolled").contains("M"),
                                                         expr(
@@ -46,6 +40,13 @@ def clean_data(df):
     df = df.withColumn("max_months_to_complete", expr(
         "substring(course_time, instr(course_time, '-')+1, length(course_time) - instr(course_time, 'Months') +1)").cast(
         "int"))
+
+    # Handle missing values for 'course_rating' and 'course_review_num'
+    df = df.withColumn("course_rating", col("course_rating").cast("double"))
+    df = df.withColumn("course_reviews_num", col("course_reviews_num").cast("integer"))
+
+    # Drop any rows where 'course_title' or 'course_organization' is null as they are essential
+    df = df.dropna(subset=["course_title", "course_organization"])
 
     return df
 

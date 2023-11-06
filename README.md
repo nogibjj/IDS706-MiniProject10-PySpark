@@ -9,13 +9,6 @@
 Requirements
 - Use PySpark to perform data processing on a large dataset
 - Include at least one Spark SQL query and one data transformation
-- 
-Grading Criteria
-Data processing functionality (20 points)
-Use of Spark SQL and transformations (20 points)
-Deliverables
-PySpark script
-Output data or summary report (PDF or markdown)
 
 
 ## Preparation
@@ -25,7 +18,37 @@ Output data or summary report (PDF or markdown)
 
 ## Run and Result
 
+### Basic PySpark
+PySpark is used to read the data and clean the data:
 
+The data clean process includes: drop the null value, drop the duplicate value, drop the column that is not needed.
+
+Furthermore, strings are converted to numbers, and the data is converted to a format that can be used for analysis.
+
+In addition, Clean 'course_time' and standardize it to months.
+
+The result is as follows:
+
+![img.png](img.png)
+
+Course Difficulty Distribution
+
+![img_2.png](img_2.png)
+
+
+### PySpark with SQL
+
+Top rated courses in each category
+
+```sql
+    SELECT course_title, course_organization, course_rating
+    FROM courses
+    WHERE course_rating IS NOT NULL
+    ORDER BY course_rating DESC
+    LIMIT 10
+```
+
+![img_1.png](img_1.png)
 
 
 
