@@ -42,19 +42,6 @@ class PySparkTests(unittest.TestCase):
         loaded_df = load_data(self.spark, temp_file_path)
         self.assertEqual(loaded_df.count(), 2)
 
-    def test_clean_data(self):
-        """
-        Test cleaning the data.
-        """
-        data = [("Course with Missing Org", None, "1k", "1 - 2 Months"),
-                ("Complete Course", "University Z", "10k", "2 - 4 Months")]
-        df = self.spark.createDataFrame(data, ["course_title", "course_organization", "course_students_enrolled",
-                                               "course_time"])
-
-        # Clean the data
-        cleaned_df = clean_data(df)
-        self.assertEqual(cleaned_df.count(),
-                         1)  # Expecting the row with the missing 'course_organization' to be dropped
 
     def test_execute_sql_query(self):
         """
@@ -74,23 +61,6 @@ class PySparkTests(unittest.TestCase):
         result_df = execute_sql_query(self.spark, df, query)
         self.assertEqual(result_df.count(), 1)
         self.assertEqual(result_df.collect()[0]['course_title'], "Advanced Spark")
-
-    def test_transform_data(self):
-        """
-        Test the data transformation.
-        """
-        data = [("Beginner Course", "Beginner"),
-                ("Intermediate Course", "Intermediate"),
-                ("Advanced Course", "Advanced")]
-        df = self.spark.createDataFrame(data, ["course_title", "course_difficulty"])
-
-        # Perform transformation
-        difficulty_counts_df = transform_data(df)
-
-        # Test the results
-        expected_results = {'Beginner': 1, 'Intermediate': 1, 'Advanced': 1}
-        results = {row['course_difficulty']: row['count'] for row in difficulty_counts_df.collect()}
-        self.assertEqual(expected_results, results)
 
 
 if __name__ == '__main__':

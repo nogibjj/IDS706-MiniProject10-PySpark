@@ -1,4 +1,4 @@
-[![CI](https://github.com/nogibjj/python-template/actions/workflows/cicd.yml/badge.svg)](https://github.com/nogibjj/python-template/actions/workflows/cicd.yml)
+[![CI](https://github.com/nogibjj/IDS706-MiniProject10-PySpark/actions/workflows/cicd.yml/badge.svg)](https://github.com/nogibjj/IDS706-MiniProject10-PySpark/actions/workflows/cicd.yml)
 
 # Template for IDS706 weekly mini-projects 
 
@@ -20,13 +20,12 @@ Output data or summary report (PDF or markdown)
 
 ## Preparation
 
-1. Open in the Github codespaces
-2. Do simple test in the terminal
+1. Python 3.9.x or above
+2. pyspark
 
 ## Run and Result
 
-This section is saved for later mini projects.
-🌰 Example in the Github Codespace 
+
 
 
 
